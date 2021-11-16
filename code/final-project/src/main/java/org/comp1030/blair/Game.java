@@ -74,12 +74,27 @@ public class Game {
     private void listShipTypes() {
         setCursorPosition(menuX, menuY);
         System.out.printf("Please enter the type of ship you want to place:\n");
-        System.out.printf("\033[4GShip Name\033[25GSize\n");
-        System.out.printf("\033[4G1.\033[8GCarrier.\033[25G5\n");
-        System.out.printf("\033[4G2.\033[8GBattleship.\033[25G4\n");
-        System.out.printf("\033[4G3.\033[8GDestroyer.\033[25G3\n");
-        System.out.printf("\033[4G4.\033[8GSubmarine.\033[25G3\n");
-        System.out.printf("\033[4G5.\033[8GPatrol Boat.\033[25G2\n\n");
+        System.out.printf("\033[4GShip Name\033[25GSize\033[32GPlaced\n");
+        System.out.printf("\033[4G1.\033[8GCarrier.\033[25G5");
+        System.out.printf("\033[32G%s",
+                ((numBoatsPlaced & Ship.Type.CARRIER.toValue())
+                == Ship.Type.CARRIER.toValue() ? "*\n" : "\n"));
+        System.out.printf("\033[4G2.\033[8GBattleship.\033[25G4");
+        System.out.printf("\033[32G%s",
+                ((numBoatsPlaced & Ship.Type.BATTLESHIP.toValue())
+                == Ship.Type.BATTLESHIP.toValue() ? "*\n" : "\n"));
+        System.out.printf("\033[4G3.\033[8GDestroyer.\033[25G3");
+        System.out.printf("\033[32G%s",
+                ((numBoatsPlaced & Ship.Type.DESTROYER.toValue())
+                == Ship.Type.DESTROYER.toValue() ? "*\n" : "\n"));
+        System.out.printf("\033[4G4.\033[8GSubmarine.\033[25G3");
+        System.out.printf("\033[32G%s",
+                ((numBoatsPlaced & Ship.Type.SUBMARINE.toValue())
+                == Ship.Type.SUBMARINE.toValue() ? "*\n" : "\n"));
+        System.out.printf("\033[4G5.\033[8GPatrol Boat.\033[25G2");
+        System.out.printf("\033[32G%s",
+                ((numBoatsPlaced & Ship.Type.PATROLBOAT.toValue())
+                == Ship.Type.PATROLBOAT.toValue() ? "*\n" : "\n"));
         System.out.printf("\033[4G6.\033[8GQuit.\n\n");
         //System.out.print("\033[10;1H: ");
     }
@@ -127,9 +142,12 @@ public class Game {
                 }
                 break;
             case PLACE_PIECES_2:
+                int shipX = helper.nextInt();
+                int shipY = helper.nextInt();
                 String rest = helper.nextLine().strip();
                 System.out.printf("rest: %s\n", rest);
                 Ship.Orientation direction = Ship.Orientation.fromChar(rest.charAt(0));
+                Ship ship = new Ship(currentType, shipX, shipY, direction);
                 helper.close();
                 // if we have already placed this boat,
                 // just go back to the previous state
@@ -137,11 +155,8 @@ public class Game {
                     state = GameState.PLACE_PIECES_1;
                     break;
                 }
-                int shipX = helper.nextInt();
-                int shipY = helper.nextInt();
-                Ship ship = new Ship(currentType, shipX, shipY, direction);
                 board.placeShip(ship, Player.PLAYER);
-                numBoatsPlaced &= ship.getType().toValue();
+                numBoatsPlaced |= ship.getType().toValue();
                 // if all boats have now been placed
                 if (numBoatsPlaced == 0b11111) {
                     state = GameState.PLAYER_GUESS;
