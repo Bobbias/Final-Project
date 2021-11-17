@@ -40,6 +40,13 @@ public class GameBoard {
             }
         };
 
+        /**
+         * An abstract method which allows each GridState value to provide their own
+         * implementation. This allows each value to provide it's own string
+         * representation rather than rely on external helper functions.
+         *
+         * @return the string representation of the tile.
+         */
         abstract String getTile();
     }
 
@@ -49,7 +56,9 @@ public class GameBoard {
     private int opponentShipsLeft = 0;
 
     /**
-     * 
+     * Constructor for the GameBoard class. Generates an 8 by 8 multidimensional
+     * array of GridState objects and initializes them to GridState.EMPTY.
+     * Represents the individual boards on which each player places their ships.
      */
     public GameBoard() {
         playerShips = new GridState[8][8];
@@ -106,9 +115,15 @@ public class GameBoard {
     }
 
     /**
-     * 
+     * Checks whether the ship's location and orientation are valid. If they are,
+     * the board is updated, and the ship counters are updated.<br>
+     * Internally it uses isLegalPlacement for most input validation.<br>
+     * Throws IllegalArgumentException if the coordinates are invalid.
+     *
      * @param ship
+     *                   the ship to be placed.
      * @param player
+     *                   the player who owns the ship.
      */
     public void placeShip(Ship ship, Game.Player player) {
         int x = ship.getX();
@@ -117,7 +132,10 @@ public class GameBoard {
         if (isLegalPlacement(x, y, ship.getSize(), facing)) {
             if (facing == Ship.Orientation.HORIZONTAL) {
                 if (x + ship.getSize() >= 8) {
-                    throw new IllegalArgumentException("X coordinate is too large. Please pick a different placement location.");
+                    StringBuilder msg = new StringBuilder();
+                    msg.append("X coordinate is too large. ");
+                    msg.append("Please pick a different placement location.");
+                    throw new IllegalArgumentException(msg.toString());
                 }
                 for (int i = x; i < x + ship.getSize(); ++i) {
                     if (player == Game.Player.PLAYER) {
@@ -130,7 +148,10 @@ public class GameBoard {
                 }
             } else if (facing == Ship.Orientation.VERTICAL) {
                 if (y + ship.getSize() >= 8) {
-                    throw new IllegalArgumentException("Y coordinate is too large. Please pick a different placement location.");
+                    StringBuilder msg = new StringBuilder();
+                    msg.append("Y coordinate is too large. ");
+                    msg.append("pick a different placement location.");
+                    throw new IllegalArgumentException(msg.toString());
                 }
                 for (int i = y; i < y + ship.getSize(); ++i) {
                     if (player == Game.Player.PLAYER) {
@@ -146,11 +167,18 @@ public class GameBoard {
     }
 
     /**
-     * 
+     * Guess checks whether or not the grid tile at the given coordinates is
+     * occupied by a ship or not.<br>
+     * Throws ArrayIndexOutOfBoundsException if either coordinate is invalid.
+     *
      * @param x
+     *                   the x coordinate.
      * @param y
+     *                   the y coordinate.
      * @param player
-     * @return
+     *                   the player making the guess.
+     * @return true if there is a shop occupying the given coordinates, false
+     *         otherwise.
      */
     public boolean guess(int x, int y, Game.Player player) {
         if (x >= 8 || y >= 8) {
@@ -179,8 +207,10 @@ public class GameBoard {
     }
 
     /**
-     * 
-     * @return
+     * Checks whether the game is over. The game is over if either player has 0 grid
+     * spaces containing a ship.
+     *
+     * @return true if either player has 0 ship grids left, false otherwise.
      */
     public boolean isGameOver() {
         if (playerShipsLeft == 0 || opponentShipsLeft == 0) {
@@ -191,8 +221,10 @@ public class GameBoard {
     }
 
     /**
-     * 
-     * @return
+     * Determines which player has won the game. Only returns a valid result when
+     * called after the game is finished.
+     *
+     * @return the winning player.
      */
     public Game.Player getWinner() {
         if (playerShipsLeft == 0) {
@@ -203,16 +235,20 @@ public class GameBoard {
     }
 
     /**
-     * 
-     * @return
+     * Getter for the player's ship placement board.
+     *
+     * @return a multidimensional array of GridState objects representing the game
+     *         board from the player's perspective.
      */
     public GridState[][] getPlayerBoard() {
         return playerShips;
     }
 
     /**
-     * 
-     * @return
+     * Getter for the opponent's ship placement board.
+     *
+     * @return a multidimensional array of GridState objects representing the game
+     *         board from the opponent's perspective.
      */
     public GridState[][] getOpponentBoard() {
         return opponentShips;
