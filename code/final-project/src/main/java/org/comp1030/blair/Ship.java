@@ -101,8 +101,16 @@ public class Ship {
 
     private Orientation orientation;
     
-    public Ship(Type type, int x, int y, Orientation direction)
-    {
+    /**
+     * The default constructor for Ship objects.
+     * Initializes x and y to 0, type to CARRIER and orientation to HORIZONTAL.
+     */
+    public Ship() {
+        this.shipX = 0;
+        this.shipY = 0;
+        this.type = Type.CARRIER;
+        this.orientation = Orientation.HORIZONTAL;
+    }
         this.type = type;
         // use the numeric value of the enum to look up the correct size
         this.size = sizes[type.ordinal()];
