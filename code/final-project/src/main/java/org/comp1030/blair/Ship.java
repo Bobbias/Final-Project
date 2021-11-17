@@ -127,22 +127,47 @@ public class Ship {
         this.orientation = direction;
     }
 
+    /**
+     * Getter for Ship's size member.
+     *
+     * @return the ship's size.
+     */
     public int getSize() {
         return this.size;
     }
 
+    /**
+     * Getter for Ship's type member.
+     *
+     * @return a Ship.Type enum value for the ship type.
+     */
     public Type getType() {
         return this.type;
     }
 
+    /**
+     * Getter for Ship's placement orientation.
+     *
+     * @return a Ship.Orientation enum value representing the direction the ship is facing.
+     */
     public Orientation getDirection() {
         return this.orientation;
     }
 
+    /**
+     * Getter for the ship's x coordinate on the board.
+     *
+     * @return the x coordinate.
+     */
     public int getX() {
         return shipX;
     }
 
+    /**
+     * Getter for the ship's y coordinate on the board.
+     *
+     * @return the y coordinate.
+     */
     public int getY() {
         return shipY;
     }
