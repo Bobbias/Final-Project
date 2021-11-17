@@ -133,6 +133,19 @@ public class Opponent {
      * 
      */
     public void placeShip() {
-        //
+        Ship newShip = new Ship();
+        for (Ship.Type shipType : Ship.Type.values()) {
+            do {
+                newShip = new Ship(shipType,
+                rand.nextInt(8),
+                rand.nextInt(8),
+                Orientation.values()[new Random().nextInt(Orientation.values().length)]
+                );
+            } while (!board.isLegalPlacement(
+                            newShip.getX(), 
+                            newShip.getY(), 
+                            newShip.getSize(), 
+                            newShip.getDirection()));
+        }
     }
 }
