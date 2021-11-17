@@ -190,7 +190,7 @@ public class Game {
                 state = GameState.PLAYER_GUESS;
                 break;
             case OPPONENT_PLACE_PIECES:
-                opponent.placeShip();
+                opponent.placeShips();
                 break;
             case PLAYER_GUESS:
                 int guessX = helper.nextInt();
