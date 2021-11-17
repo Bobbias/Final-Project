@@ -1,6 +1,7 @@
 package org.comp1030.blair;
 
 import java.util.Random;
+import org.comp1030.blair.Ship.Orientation;
 
 /** Opponent contains the AI which determines how the AI opponent makes guesses.
  * 
@@ -75,7 +76,7 @@ public class Opponent {
      * linked list, and then selects one at random to apply the targeted guess logic to.</li></ul>
      */
     public void makeGuess() {
-        int x;
+        int x; // forward declaration so I dont have to declare these in each case.
         int y;
         switch (diff) { // Just guess randomly.
             case EASY:
