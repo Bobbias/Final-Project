@@ -1,6 +1,7 @@
 package org.comp1030.blair;
 
 import java.util.Random;
+import org.comp1030.blair.Game.Player;
 import org.comp1030.blair.Ship.Orientation;
 
 /** Opponent contains the AI which determines how the AI opponent makes guesses.
@@ -118,7 +119,7 @@ public class Opponent {
                         } // and pick one at random to guess near
                         int randomHit = rand.nextInt(hits.size());
                         Node hit = hits.nodeAt(randomHit);
-                        x = Math.min(hit.getX() + (rand.nextInt(3) - 1), 7); // todo: make sure this actually works
+                        x = Math.min(hit.getX() + (rand.nextInt(3) - 1), 7);
                         y = Math.min(hit.getY() + (rand.nextInt(3) - 1), 7);
                         lastGuess = board.guess(x, y, Game.Player.AI);
                     }
@@ -130,10 +131,15 @@ public class Opponent {
     }
 
     /**
-     * 
+     * Randomly places one of each ship type on the board for the AI.
      */
-    public void placeShip() {
+    public void placeShips() {
         Ship newShip = new Ship();
+        // Loop through the ship types, and then randomly generate ships and
+        // check if the ship placement is valid. If the placement is invalid
+        // it generates a new random ship and repeats the process until a
+        // valid placement is found. Once a valid placement is found, it
+        // places the ship on the board and continues to the next ship type.
         for (Ship.Type shipType : Ship.Type.values()) {
             do {
                 newShip = new Ship(shipType,
@@ -146,6 +152,7 @@ public class Opponent {
                             newShip.getY(), 
                             newShip.getSize(), 
                             newShip.getDirection()));
+            board.placeShip(newShip, Player.AI);
         }
     }
 }
