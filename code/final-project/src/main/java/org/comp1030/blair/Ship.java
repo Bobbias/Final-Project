@@ -1,7 +1,7 @@
 package org.comp1030.blair;
 
-/** Ship represents a ship on the game board.
- * 
+/**
+ * Ship represents a ship on the game board.
  */
 public class Ship {
     // These enumerations are public so other objects can still
@@ -9,7 +9,7 @@ public class Ship {
     // in the class which makes the most sense.
 
     /**
-     * 
+     * The Type enum defines several values which represent the different types of ship pieces.
      */
     public enum Type {
         CARRIER(1), BATTLESHIP(2), DESTROYER(4), SUBMARINE(8), PATROLBOAT(16);
@@ -54,7 +54,7 @@ public class Ship {
     }
     
     /**
-     * 
+     * The Orientation enum represents the direction that a ship is facing on the game board.
      */
     public enum Orientation {
         VERTICAL('v'),
@@ -71,9 +71,11 @@ public class Ship {
         }
 
         /**
-         * 
-         * @param c
-         * @return
+         * Converts a character to an Orientation. Valid characters are 'h' and 'v'.
+         * Throws IllegalArgumentException for invalid characters.
+         *
+         * @param c the character to convert. Must be 'h' or 'v'.
+         * @return HORIZONTAL for 'h' or VERTICAL for 'v'.
          */
         public static Orientation fromChar(char c) {
             switch (c) {
