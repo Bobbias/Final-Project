@@ -115,22 +115,42 @@ public class Game {
             case PLACE_PIECES_1:
                 switch (input) {
                     case "1":
+                        if ((numBoatsPlaced & Ship.Type.CARRIER.toValue())
+                                == Ship.Type.CARRIER.toValue()) {
+                            break;
+                        }
                         currentType = Ship.Type.CARRIER;
                         state = GameState.PLACE_PIECES_2;
                         break;
                     case "2":
+                        if ((numBoatsPlaced & Ship.Type.BATTLESHIP.toValue())
+                                    == Ship.Type.BATTLESHIP.toValue()) {
+                            break;
+                        }
                         currentType = Ship.Type.BATTLESHIP;
                         state = GameState.PLACE_PIECES_2;
                         break;
                     case "3":
+                        if ((numBoatsPlaced & Ship.Type.DESTROYER.toValue())
+                                == Ship.Type.DESTROYER.toValue()) {
+                            break;
+                        }
                         currentType = Ship.Type.DESTROYER;
                         state = GameState.PLACE_PIECES_2;
                         break;
                     case "4":
+                        if ((numBoatsPlaced & Ship.Type.SUBMARINE.toValue())
+                                == Ship.Type.SUBMARINE.toValue()) {
+                            break;
+                        }
                         currentType = Ship.Type.SUBMARINE;
                         state = GameState.PLACE_PIECES_2;
                         break;
                     case "5":
+                        if ((numBoatsPlaced & Ship.Type.PATROLBOAT.toValue())
+                                == Ship.Type.PATROLBOAT.toValue()) {
+                            break;
+                        }
                         currentType = Ship.Type.PATROLBOAT;
                         state = GameState.PLACE_PIECES_2;
                         break;
