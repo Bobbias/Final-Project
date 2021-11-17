@@ -77,17 +77,17 @@ public class Opponent {
     public void makeGuess() {
         int x;
         int y;
-        switch (diff) {
+        switch (diff) { // Just guess randomly.
             case EASY:
                 x = rand.nextInt(8);
                 y = rand.nextInt(8);
                 board.guess(x, y, Game.Player.AI);
                 break;
-            case NORMAL:
+            case NORMAL: // If last guess hit something, guess near it.
                 if (lastGuess) {
                     x = lastX + (rand.nextInt(2) - 1);
                     y = lastY + (rand.nextInt(2) - 1);
-                } else {
+                } else { // Otherwise make a random guess.
                     x = rand.nextInt(8);
                     y = rand.nextInt(8);
                 }
@@ -107,18 +107,18 @@ public class Opponent {
                     } else { // if our last guess did not hit, pick a random hit location to use
                         // temporary linked list because i dont know what size array i might need
                         MyList hits = new MyList();
-                        // collect all the hit locations, and pick one at random to guess near
+                        // collect all the hit locations
                         for (int u = 0; u < 8; ++u) {
                             for (int v = 0; v < 8; ++v) {
                                 if (opponentShips[u][v]) {
                                     hits.append(u, v);
                                 }
                             }
-                        }
+                        } // and pick one at random to guess near
                         int randomHit = rand.nextInt(hits.size());
                         Node hit = hits.nodeAt(randomHit);
-                        x = Math.max(hit.getX() + (rand.nextInt(2) - 1), 7);
-                        y = Math.max(hit.getY() + (rand.nextInt(2) - 1), 7);
+                        x = Math.min(hit.getX() + (rand.nextInt(3) - 1), 7);
+                        y = Math.min(hit.getY() + (rand.nextInt(3) - 1), 7);
                         lastGuess = board.guess(x, y, Game.Player.AI);
                     }
                 }
