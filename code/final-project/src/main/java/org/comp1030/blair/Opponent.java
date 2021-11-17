@@ -117,7 +117,7 @@ public class Opponent {
                         } // and pick one at random to guess near
                         int randomHit = rand.nextInt(hits.size());
                         Node hit = hits.nodeAt(randomHit);
-                        x = Math.min(hit.getX() + (rand.nextInt(3) - 1), 7);
+                        x = Math.min(hit.getX() + (rand.nextInt(3) - 1), 7); // todo: make sure this actually works
                         y = Math.min(hit.getY() + (rand.nextInt(3) - 1), 7);
                         lastGuess = board.guess(x, y, Game.Player.AI);
                     }
@@ -132,6 +132,6 @@ public class Opponent {
      * 
      */
     public void placeShip() {
-
+        //
     }
 }

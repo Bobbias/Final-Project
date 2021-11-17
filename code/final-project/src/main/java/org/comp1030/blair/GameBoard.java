@@ -6,14 +6,14 @@ package org.comp1030.blair;
  * 
  */
 public class GameBoard {
-    // This enum represents the possible states that a tile may take.
-    // I take advantage of enums being classes to make things far easier
-    // I am aware that this is advanced java beyond what we are taught in
-    // class.
-    // Since every enum value is itself a class, and can contain a class
-    // body, AND they implicitly inherit from the base enum, I can define
-    // an abstract method in the enum which each enum value class can
-    // override.
+    /**
+     * This enum represents the possible states that a tile may take. I take
+     * advantage of enums being classes to make things far easier I am aware that
+     * this is advanced java beyond what we are taught in class.<br>
+     * Since every enum value is itself a class, and can contain a class body, AND
+     * they implicitly inherit from the base enum, I can define an abstract method
+     * in the enum which each enum value class can override.
+     */
     public enum GridState {
         EMPTY {
             @Override
@@ -41,14 +41,16 @@ public class GameBoard {
         };
 
         abstract String getTile();
-    };
+    }
 
-    private GridState playerShips[][];
-    private GridState opponentShips[][];
+    private GridState[][] playerShips;
+    private GridState[][] opponentShips;
     private int playerShipsLeft = 0;
     private int opponentShipsLeft = 0;
 
-    // ctor
+    /**
+     * 
+     */
     public GameBoard() {
         playerShips = new GridState[8][8];
         opponentShips = new GridState[8][8];
@@ -61,32 +63,53 @@ public class GameBoard {
         }
     }
 
+    /**
+     * isLegalPlacement checks the game board to ensure that a ship placement will
+     * fit on the board, and does not overlap any other ships.
+     *
+     * @param x
+     *                      the x coordinate of the ship to be placed.
+     * @param y
+     *                      the y coordinate of the ship to be placed.
+     * @param size
+     *                      the size of the ship to be placed.
+     * @param direction
+     *                      the direction the ship is facing.
+     * @return true if the provided placement information is legal, false if not.
+     */
     public boolean isLegalPlacement(int x, int y, int size, Ship.Orientation direction) {
         boolean result = true;
         try {
             // System.out.printf("size: %d\n", size);
             switch (direction) {
-            case HORIZONTAL:
-                for (int a = x; a < (x + size); ++a) {
-                    if (playerShips[a][y] != GridState.EMPTY) {
-                        result = false;
+                case HORIZONTAL:
+                    for (int a = x; a < (x + size); ++a) {
+                        if (playerShips[a][y] != GridState.EMPTY) {
+                            result = false;
+                        }
                     }
-                }
-                break;
-            case VERTICAL:
-                for (int b = y; b < (y + size); ++b) {
-                    if (playerShips[x][b] != GridState.EMPTY) {
-                        result = false;
+                    break;
+                case VERTICAL:
+                    for (int b = y; b < (y + size); ++b) {
+                        if (playerShips[x][b] != GridState.EMPTY) {
+                            result = false;
+                        }
                     }
-                }
-                break;
-            }    
+                    break;
+                default:
+                    break;
+            }
         } catch (IndexOutOfBoundsException e) {
             result = false;
         }
         return result;
     }
 
+    /**
+     * 
+     * @param ship
+     * @param player
+     */
     public void placeShip(Ship ship, Game.Player player) {
         int x = ship.getX();
         int y = ship.getY();
@@ -94,8 +117,7 @@ public class GameBoard {
         if (isLegalPlacement(x, y, ship.getSize(), facing)) {
             if (facing == Ship.Orientation.HORIZONTAL) {
                 if (x + ship.getSize() >= 8) {
-                    throw new IllegalArgumentException(
-                            "X coordinate is too large. Please pick a different placement location.");
+                    throw new IllegalArgumentException("X coordinate is too large. Please pick a different placement location.");
                 }
                 for (int i = x; i < x + ship.getSize(); ++i) {
                     if (player == Game.Player.PLAYER) {
@@ -108,8 +130,7 @@ public class GameBoard {
                 }
             } else if (facing == Ship.Orientation.VERTICAL) {
                 if (y + ship.getSize() >= 8) {
-                    throw new IllegalArgumentException(
-                            "Y coordinate is too large. Please pick a different placement location.");
+                    throw new IllegalArgumentException("Y coordinate is too large. Please pick a different placement location.");
                 }
                 for (int i = y; i < y + ship.getSize(); ++i) {
                     if (player == Game.Player.PLAYER) {
@@ -124,12 +145,17 @@ public class GameBoard {
         }
     }
 
+    /**
+     * 
+     * @param x
+     * @param y
+     * @param player
+     * @return
+     */
     public boolean guess(int x, int y, Game.Player player) {
-        if (x >= 8 ||
-            y >= 8)
-            {
-                throw new ArrayIndexOutOfBoundsException("Either x or y was too high, try again.");
-            }
+        if (x >= 8 || y >= 8) {
+            throw new ArrayIndexOutOfBoundsException("Either x or y was too high, try again.");
+        }
 
         if (player == Game.Player.PLAYER) {
             if (opponentShips[x][y] == GridState.SHIP) {
@@ -152,6 +178,10 @@ public class GameBoard {
         }
     }
 
+    /**
+     * 
+     * @return
+     */
     public boolean isGameOver() {
         if (playerShipsLeft == 0 || opponentShipsLeft == 0) {
             return true;
@@ -160,21 +190,30 @@ public class GameBoard {
         }
     }
 
+    /**
+     * 
+     * @return
+     */
     public Game.Player getWinner() {
-        if (playerShipsLeft == 0)
-        {
+        if (playerShipsLeft == 0) {
             return Game.Player.AI;
-        }
-        else
-        {
+        } else {
             return Game.Player.PLAYER;
         }
     }
 
+    /**
+     * 
+     * @return
+     */
     public GridState[][] getPlayerBoard() {
         return playerShips;
     }
 
+    /**
+     * 
+     * @return
+     */
     public GridState[][] getOpponentBoard() {
         return opponentShips;
     }
