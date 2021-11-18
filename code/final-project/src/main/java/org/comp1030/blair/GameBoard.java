@@ -1,5 +1,7 @@
 package org.comp1030.blair;
 
+import org.comp1030.blair.Ship.Orientation;
+
 /**
  * GameBoard represents the 8 by 8 board on which our battleship game takes
  * place.
@@ -86,10 +88,9 @@ public class GameBoard {
      *                      the direction the ship is facing.
      * @return true if the provided placement information is legal, false if not.
      */
-    public boolean isLegalPlacement(int x, int y, int size, Ship.Orientation direction) {
+    public boolean isLegalPlacement(int x, int y, int size, Orientation direction) {
         boolean result = true;
         try {
-            // System.out.printf("size: %d\n", size);
             switch (direction) {
                 case HORIZONTAL:
                     for (int a = x; a < (x + size); ++a) {
@@ -187,11 +188,11 @@ public class GameBoard {
 
         if (player == Game.Player.PLAYER) {
             if (opponentShips[x][y] == GridState.SHIP) {
-                playerShips[x][y] = GridState.HIT;
+                opponentShips[x][y] = GridState.HIT;
                 opponentShipsLeft--;
                 return true;
             } else {
-                playerShips[x][y] = GridState.MISS;
+                opponentShips[x][y] = GridState.MISS;
                 return false;
             }
         } else {
