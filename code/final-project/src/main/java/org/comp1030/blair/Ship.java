@@ -9,7 +9,8 @@ public class Ship {
     // in the class which makes the most sense.
 
     /**
-     * The Type enum defines several values which represent the different types of ship pieces.
+     * The Type enum defines several values which represent the different
+     * types of ship pieces.
      */
     public enum Type {
         CARRIER(1), BATTLESHIP(2), DESTROYER(4), SUBMARINE(8), PATROLBOAT(16);
@@ -54,7 +55,8 @@ public class Ship {
     }
     
     /**
-     * The Orientation enum represents the direction that a ship is facing on the game board.
+     * The Orientation enum represents the direction that a ship is facing
+     * on the game board.
      */
     public enum Orientation {
         VERTICAL('v'),
@@ -84,7 +86,8 @@ public class Ship {
                 case 'v':
                     return VERTICAL;
                 default:
-                    throw new IllegalArgumentException("Character must be 'v' or 'h'.");
+                    throw new IllegalArgumentException(
+                                "Character must be 'v' or 'h'.");
             }
         }
     }
@@ -148,7 +151,8 @@ public class Ship {
     /**
      * Getter for Ship's placement orientation.
      *
-     * @return a Ship.Orientation enum value representing the direction the ship is facing.
+     * @return a Ship.Orientation enum value representing the direction
+     *         the ship is facing.
      */
     public Orientation getDirection() {
         return this.orientation;

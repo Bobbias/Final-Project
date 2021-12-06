@@ -183,7 +183,8 @@ public class GameBoard {
      */
     public boolean guess(int x, int y, Game.Player player) {
         if (x >= 8 || y >= 8) {
-            throw new ArrayIndexOutOfBoundsException("Either x or y was too high, try again.");
+            throw new 
+            ArrayIndexOutOfBoundsException("Either x or y was too high, try again.");
         }
 
         if (player == Game.Player.PLAYER) {

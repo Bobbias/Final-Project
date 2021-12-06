@@ -64,17 +64,19 @@ public class Opponent {
     }
 
     /**
-     * makeGuess is the heart of the AI. Based on which difficulty level, there are 3 possible
-     * code paths.<br>
+     * makeGuess is the heart of the AI. Based on which difficulty level, there 
+     * are 3 possible code paths.<br>
      * <ul><li>If the Easy difficulty is selected, the AI will guess randomly.</li>
-     * <li>If the Normal difficulty is selected, the AI will guess randomly, but if a random
-     * guess hits a player's ship, the next guess will be within 1 tile of the previous guess.
-     * If the second guess misses, it will return to guessing randomly.</li>
-     * <li>If the Hard difficulty is selected, the AI first checks if it has hit any of the
-     * player's ships yet. If not, it guesses randomly. If it has hit one of the player's
-     * ships, it first checks if the previous guess was a hit. If it was, it uses the same
-     * logic as above. If not, it collects all of it's previous successful guesses into a
-     * linked list, and then selects one at random to apply the targeted guess logic to.</li></ul>
+     * <li>If the Normal difficulty is selected, the AI will guess randomly, but
+     * if a random guess hits a player's ship, the next guess will be within 1
+     * tile of the previous guess. If the second guess misses, it will return
+     * to guessing randomly.</li>
+     * <li>If the Hard difficulty is selected, the AI first checks if it has hit
+     * any of the player's ships yet. If not, it guesses randomly. If it has hit
+     * one of the player's ships, it first checks if the previous guess was a hit.
+     * If it was, it uses the same logic as above. If not, it collects all of it's
+     * previous successful guesses into a linked list, and then selects one at
+     * random to apply the targeted guess logic to.</li></ul>
      */
     public void makeGuess() {
         int x; // forward declaration so I dont have to declare these in each case.
@@ -106,8 +108,11 @@ public class Opponent {
                     if (lastGuess) {
                         x = Math.max(lastX + (rand.nextInt(2) - 1), 7);
                         y = Math.max(lastY + (rand.nextInt(2) - 1), 7);
-                    } else { // if our last guess did not hit, pick a random hit location to use
-                        // temporary linked list because i dont know what size array i might need
+                    } else {
+                    // if our last guess did not hit, pick a random hit
+                    // location to use.                        
+                        // temporary linked list because i dont know what
+                        // size array i might need
                         MyList hits = new MyList();
                         // collect all the hit locations
                         for (int u = 0; u < 8; ++u) {
@@ -145,7 +150,8 @@ public class Opponent {
                 newShip = new Ship(shipType,
                 rand.nextInt(8),
                 rand.nextInt(8),
-                Orientation.values()[new Random().nextInt(Orientation.values().length)]
+                Orientation.values()[new Random()
+                    .nextInt(Orientation.values().length)]
                 );
             } while (!board.isLegalPlacement(
                             newShip.getX(), 

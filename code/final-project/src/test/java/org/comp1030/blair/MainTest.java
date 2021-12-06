@@ -20,11 +20,21 @@ public class MainTest {
     public static class ShipTests {
         @Test
         public void ship_sizes() {
-            assertTrue(new Ship(Ship.Type.CARRIER, 0, 0, Orientation.HORIZONTAL).getSize() == 5);
-            assertTrue(new Ship(Ship.Type.BATTLESHIP, 0, 0, Orientation.HORIZONTAL).getSize() == 4);
-            assertTrue(new Ship(Ship.Type.DESTROYER, 0, 0, Orientation.HORIZONTAL).getSize() == 3);
-            assertTrue(new Ship(Ship.Type.SUBMARINE, 0, 0, Orientation.HORIZONTAL).getSize() == 3);
-            assertTrue(new Ship(Ship.Type.PATROLBOAT, 0, 0, Orientation.HORIZONTAL).getSize() == 2);
+            assertTrue(
+                new Ship(Ship.Type.CARRIER, 0, 0, Orientation.HORIZONTAL)
+                    .getSize() == 5);
+            assertTrue(
+                new Ship(Ship.Type.BATTLESHIP, 0, 0, Orientation.HORIZONTAL)
+                    .getSize() == 4);
+            assertTrue(
+                new Ship(Ship.Type.DESTROYER, 0, 0, Orientation.HORIZONTAL)
+                    .getSize() == 3);
+            assertTrue(
+                new Ship(Ship.Type.SUBMARINE, 0, 0, Orientation.HORIZONTAL)
+                    .getSize() == 3);
+            assertTrue(
+                new Ship(Ship.Type.PATROLBOAT, 0, 0, Orientation.HORIZONTAL)
+                    .getSize() == 2);
         }
 
         @Test
@@ -71,8 +81,10 @@ public class MainTest {
         public void gameBoard_isInitializedEmpty() {
             for (int y = 0; y < 8; ++y) {
                 for (int x = 0; x < 8; ++x) {
-                    assertTrue(board.getPlayerBoard()[x][y] == GameBoard.GridState.EMPTY);
-                    assertTrue(board.getOpponentBoard()[x][y] == GameBoard.GridState.EMPTY);
+                    assertTrue(board.getPlayerBoard()[x][y] 
+                            == GameBoard.GridState.EMPTY);
+                    assertTrue(board.getOpponentBoard()[x][y] 
+                            == GameBoard.GridState.EMPTY);
                 }
             }
         }
@@ -101,10 +113,12 @@ public class MainTest {
         public void gameBoard_placeShipBattleshipHBottom() {
             int placementX = 0;
             int placementY = 7;
-            Ship ship = new Ship(Type.BATTLESHIP, placementX, placementY, Orientation.HORIZONTAL);
+            Ship ship = new Ship(Type.BATTLESHIP, placementX,
+                    placementY, Orientation.HORIZONTAL);
             board.placeShip(ship, Player.PLAYER);
             for (int x = placementX; x < ship.getSize(); ++x) {
-                assertTrue(board.getPlayerBoard()[x][placementY] == GameBoard.GridState.SHIP);
+                assertTrue(board.getPlayerBoard()[x][placementY] 
+                        == GameBoard.GridState.SHIP);
             }
         }
 
@@ -218,13 +232,15 @@ public class MainTest {
 
         @Test
         public void gameBoard_isLegalPlacement_OverlapVH() {
-            board.placeShip(new Ship(Type.CARRIER, 0, 0, Orientation.VERTICAL), Player.PLAYER);
+            board.placeShip(
+                new Ship(Type.CARRIER, 0, 0, Orientation.VERTICAL), Player.PLAYER);
             assertFalse(board.isLegalPlacement(0, 1, 5, Orientation.HORIZONTAL));
         }
 
         @Test
         public void gameBoard_isLegalPlacement_OverlapHV() {
-            board.placeShip(new Ship(Type.CARRIER, 0, 1, Orientation.HORIZONTAL), Player.PLAYER);
+            board.placeShip(
+                new Ship(Type.CARRIER, 0, 1, Orientation.HORIZONTAL), Player.PLAYER);
             assertFalse(board.isLegalPlacement(0, 0, 5, Orientation.VERTICAL));
         }
 
